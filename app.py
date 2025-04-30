@@ -124,9 +124,9 @@ sensitive_group = st.selectbox(
 
 # --- Predict & Display ---
 if st.button("📈 Predict AQI"):
-    lo = model_lo.booster.predict(input_data.values)[0]
-    med= model_med.booster.predict(input_data.values)[0]
-    hi = model_hi.booster.predict(input_datav)[0]
+    lo  = model_lo.booster_.predict(input_data.values)[0]
+    med = model_med.booster_.predict(input_data.values)[0]
+    hi  = model_hi.booster_.predict(input_data.values)[0]
     margin = (hi - lo) / 2
     confidence = compute_confidence(0.05, 0.95)
 
