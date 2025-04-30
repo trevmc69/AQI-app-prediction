@@ -23,11 +23,12 @@ def compute_confidence(alpha_low: float = 0.05, alpha_high: float = 0.95) -> flo
 # --- Load Quantile Models ---
 @st.cache_resource
 def load_models():
-    here = os.path.dirname(__file__)    # folder where app.py lives
+    here     = os.path.dirname(__file__)
+    model_dir = os.path.join(here, "models")
     paths = {
-        "lo":  os.path.join(here, "lightgbm_quantile_05.pkl"),
-        "med": os.path.join(here, "lightgbm_quantile_50.pkl"),
-        "hi":  os.path.join(here, "lightgbm_quantile_95.pkl"),
+        "lo":  os.path.join(model_dir, "lightgbm_quantile_05.pkl"),
+        "med": os.path.join(model_dir, "lightgbm_quantile_50.pkl"),
+        "hi":  os.path.join(model_dir, "lightgbm_quantile_95.pkl"),
     }
     models = {}
     for k, p in paths.items():
@@ -37,6 +38,7 @@ def load_models():
             models[k] = pickle.load(f)
     return models
 
+# at module top
 models = load_models()
 model_lo, model_med, model_hi = models["lo"], models["med"], models["hi"]
 
