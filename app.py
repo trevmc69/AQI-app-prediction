@@ -23,22 +23,18 @@ def compute_confidence(alpha_low: float = 0.05, alpha_high: float = 0.95) -> flo
 # --- Load Quantile Models ---
 @st.cache_resource
 def load_models():
-    # Find the directory this script lives in
-    base_dir = os.path.dirname(__file__)
-    model_dir = os.path.join(base_dir, "models")
-
+    here = os.path.dirname(__file__)    # folder where app.py lives
     paths = {
-        "lo":  os.path.join(model_dir, "lightgbm_quantile_05.pkl"),
-        "med": os.path.join(model_dir, "lightgbm_quantile_50.pkl"),
-        "hi":  os.path.join(model_dir, "lightgbm_quantile_95.pkl"),
+        "lo":  os.path.join(here, "lightgbm_quantile_05.pkl"),
+        "med": os.path.join(here, "lightgbm_quantile_50.pkl"),
+        "hi":  os.path.join(here, "lightgbm_quantile_95.pkl"),
     }
-
     models = {}
-    for key, path in paths.items():
-        if not os.path.exists(path):
-            raise FileNotFoundError(f"Model file not found: {path}")
-        with open(path, "rb") as f:
-            models[key] = pickle.load(f)
+    for k, p in paths.items():
+        if not os.path.exists(p):
+            raise FileNotFoundError(f"Model file not found: {p}")
+        with open(p, "rb") as f:
+            models[k] = pickle.load(f)
     return models
 
 models = load_models()
